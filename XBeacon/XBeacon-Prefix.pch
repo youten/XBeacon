@@ -6,4 +6,18 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+
+// http://qiita.com/yusuga_/items/3751cf2a0b0dbf2eefd8
+#ifdef DEBUG
+#define LOG(...) NSLog(__VA_ARGS__)
+#define LOG_PRINTF(FORMAT, ...) printf("%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#define LOG_METHOD NSLog(@"%s", __func__)
+#define LOG_METHOD_AND_ABORT LOG_METHOD; abort()
+#else
+#define LOG(...)
+#define LOG_PRINTF(FORMAT, ...)
+#define LOG_METHOD
+#define LOG_METHOD_AND_ABORT
+#endif
+
 #endif

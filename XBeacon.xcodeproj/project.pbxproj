@@ -18,6 +18,12 @@
 		5A831F1F18472415004F3209 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A831EFE18472415004F3209 /* Cocoa.framework */; };
 		5A831F2718472415004F3209 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A831F2518472415004F3209 /* InfoPlist.strings */; };
 		5A831F2918472415004F3209 /* XBeaconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A831F2818472415004F3209 /* XBeaconTests.m */; };
+		5ADE09DE184753E600D38C22 /* bt-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE09DC184753E600D38C22 /* bt-icon.png */; };
+		5ADE09DF184753E600D38C22 /* bt-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE09DD184753E600D38C22 /* bt-icon@2x.png */; };
+		5ADE09E11847564E00D38C22 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ADE09E01847564E00D38C22 /* CoreLocation.framework */; };
+		5ADE09E31847579300D38C22 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ADE09E21847579300D38C22 /* IOBluetooth.framework */; };
+		5ADE09E61847674F00D38C22 /* BLCBeaconAdvertisementData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE09E51847674F00D38C22 /* BLCBeaconAdvertisementData.m */; };
+		5ADE09E918476DF800D38C22 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADE09E818476DF800D38C22 /* Settings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +56,14 @@
 		5A831F2418472415004F3209 /* XBeaconTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XBeaconTests-Info.plist"; sourceTree = "<group>"; };
 		5A831F2618472415004F3209 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A831F2818472415004F3209 /* XBeaconTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XBeaconTests.m; sourceTree = "<group>"; };
+		5ADE09DC184753E600D38C22 /* bt-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bt-icon.png"; path = "image/bt-icon.png"; sourceTree = "<group>"; };
+		5ADE09DD184753E600D38C22 /* bt-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bt-icon@2x.png"; path = "image/bt-icon@2x.png"; sourceTree = "<group>"; };
+		5ADE09E01847564E00D38C22 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5ADE09E21847579300D38C22 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
+		5ADE09E41847674F00D38C22 /* BLCBeaconAdvertisementData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCBeaconAdvertisementData.h; sourceTree = "<group>"; };
+		5ADE09E51847674F00D38C22 /* BLCBeaconAdvertisementData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCBeaconAdvertisementData.m; sourceTree = "<group>"; };
+		5ADE09E718476DF800D38C22 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		5ADE09E818476DF800D38C22 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5ADE09E31847579300D38C22 /* IOBluetooth.framework in Frameworks */,
+				5ADE09E11847564E00D38C22 /* CoreLocation.framework in Frameworks */,
 				5A831EFF18472415004F3209 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +111,8 @@
 		5A831EFD18472415004F3209 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5ADE09E21847579300D38C22 /* IOBluetooth.framework */,
+				5ADE09E01847564E00D38C22 /* CoreLocation.framework */,
 				5A831EFE18472415004F3209 /* Cocoa.framework */,
 				5A831F1D18472415004F3209 /* XCTest.framework */,
 				5A831F0018472415004F3209 /* Other Frameworks */,
@@ -115,10 +133,16 @@
 		5A831F0418472415004F3209 /* XBeacon */ = {
 			isa = PBXGroup;
 			children = (
+				5ADE09E718476DF800D38C22 /* Settings.h */,
+				5ADE09E818476DF800D38C22 /* Settings.m */,
 				5A831F1018472415004F3209 /* AppDelegate.h */,
 				5A831F1118472415004F3209 /* AppDelegate.m */,
 				5A831F1318472415004F3209 /* MainMenu.xib */,
+				5ADE09E41847674F00D38C22 /* BLCBeaconAdvertisementData.h */,
+				5ADE09E51847674F00D38C22 /* BLCBeaconAdvertisementData.m */,
 				5A831F1618472415004F3209 /* Images.xcassets */,
+				5ADE09DC184753E600D38C22 /* bt-icon.png */,
+				5ADE09DD184753E600D38C22 /* bt-icon@2x.png */,
 				5A831F0518472415004F3209 /* Supporting Files */,
 			);
 			path = XBeacon;
@@ -233,6 +257,8 @@
 				5A831F0918472415004F3209 /* InfoPlist.strings in Resources */,
 				5A831F1718472415004F3209 /* Images.xcassets in Resources */,
 				5A831F0F18472415004F3209 /* Credits.rtf in Resources */,
+				5ADE09DF184753E600D38C22 /* bt-icon@2x.png in Resources */,
+				5ADE09DE184753E600D38C22 /* bt-icon.png in Resources */,
 				5A831F1518472415004F3209 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,6 +280,8 @@
 			files = (
 				5A831F1218472415004F3209 /* AppDelegate.m in Sources */,
 				5A831F0B18472415004F3209 /* main.m in Sources */,
+				5ADE09E918476DF800D38C22 /* Settings.m in Sources */,
+				5ADE09E61847674F00D38C22 /* BLCBeaconAdvertisementData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +492,7 @@
 				5A831F2E18472415004F3209 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5A831F2F18472415004F3209 /* Build configuration list for PBXNativeTarget "XBeaconTests" */ = {
 			isa = XCConfigurationList;
@@ -472,6 +501,7 @@
 				5A831F3118472415004F3209 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

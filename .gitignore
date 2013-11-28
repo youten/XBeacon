@@ -1,0 +1,9 @@
+# for Xcode
+*.xcodeproj/*
+*/*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*/*.xcodeproj/project.pbxproj
+!*.xcworkspace/contents.xcworkspacedata
+!*/*.xcworkspace/contents.xcworkspacedata
+.DS_Store
+

@@ -8,6 +8,7 @@
 //
 
 #import "BLCBeaconAdvertisementData.h"
+#import <IOBluetooth/IOBluetooth.h>
 
 @implementation BLCBeaconAdvertisementData
 
@@ -23,7 +24,6 @@
 
     return self;
 }
-
 
 - (NSDictionary *)beaconAdvertisement {
     NSString *beaconKey = @"kCBAdvDataAppleBeaconKey";
@@ -41,8 +41,9 @@
     advertisementBytes[20] = self.measuredPower;
     
     NSMutableData *advertisement = [NSMutableData dataWithBytes:advertisementBytes length:21];
-    
-    return [NSDictionary dictionaryWithObject:advertisement forKey:beaconKey];
+    NSDictionary *dict = @{beaconKey:advertisement,
+                           CBAdvertisementDataLocalNameKey:@"XB"};
+    return dict;
 }
 
 @end

@@ -225,6 +225,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = youten;
 				TargetAttributes = {
+					5A831EFA18472415004F3209 = {
+						DevelopmentTeam = 6GJG94TSFC;
+					};
 					5A831F1B18472415004F3209 = {
 						TestTargetID = 5A831EFA18472415004F3209;
 					};

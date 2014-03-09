@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5A831EFA18472415004F3209"
                BuildableName = "XBeacon.app"
-               BlueprintName = "XBeacon"
+               BlueprintName = "BLEMasakari"
                ReferencedContainer = "container:XBeacon.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,7 +44,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A831EFA18472415004F3209"
             BuildableName = "XBeacon.app"
-            BlueprintName = "XBeacon"
+            BlueprintName = "BLEMasakari"
             ReferencedContainer = "container:XBeacon.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,7 +63,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A831EFA18472415004F3209"
             BuildableName = "XBeacon.app"
-            BlueprintName = "XBeacon"
+            BlueprintName = "BLEMasakari"
             ReferencedContainer = "container:XBeacon.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -81,7 +81,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5A831EFA18472415004F3209"
             BuildableName = "XBeacon.app"
-            BlueprintName = "XBeacon"
+            BlueprintName = "BLEMasakari"
             ReferencedContainer = "container:XBeacon.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

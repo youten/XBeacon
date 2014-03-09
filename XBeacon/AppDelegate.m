@@ -11,8 +11,21 @@
 #import "BLCBeaconAdvertisementData.h"
 #import "Settings.h"
 
+#define KC_SPACE 49
+#define KC_COMMAND 55
+#define KC_OPTION 58
+#define KC_P 35
+#define KC_ESC 53
+#define KC_LEFT 123
+#define KC_RIGHT 124
+#define KC_UP 126
+#define KC_DOWN 125
+
+// 1802 Immediate Alert
+static NSString * SERVICE_IMMEDIATE_ALERT = @"00001802-0000-1000-8000-00805f9b34fb";
+static NSString * CHAR_ALERT_LEVEL = @"00002a06-0000-1000-8000-00805f9b34fb";
+
 @interface AppDelegate () <CBPeripheralManagerDelegate>
-@property (nonatomic,strong) CBPeripheralManager *manager;
 
 @property (weak) IBOutlet NSButton  *saveButton;
 @property (weak) IBOutlet NSTextField *uuidTextField;
@@ -30,6 +43,10 @@
     NSMenu *_menu;
     NSMenuItem *_startItem;
     NSMenuItem *_stopItem;
+    
+    CBPeripheralManager *_peripheralManager;
+    CBMutableService *_immediateAlertService;
+    CBMutableCharacteristic *_alertLevelChar;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -42,8 +59,9 @@
     [_minorValueTextField setIntegerValue:_settings.minor];
     [_measuredPowerTextField setIntegerValue:_settings.measuredPower];
 
-    _manager = [[CBPeripheralManager alloc] initWithDelegate:self
-                                                       queue:nil];
+    if (!_peripheralManager) {
+        [self initService];
+    }
 }
 
 // God is there.
@@ -59,17 +77,12 @@
 - (void)startBeacon:(id)sender
 {
     LOG_METHOD;
-    if (_manager.isAdvertising) {
+    if (_peripheralManager.isAdvertising) {
         // ignore
     } else {
-        NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:_settings.proximityUUID];
-        
-        BLCBeaconAdvertisementData *beaconData =
-            [[BLCBeaconAdvertisementData alloc] initWithProximityUUID:proximityUUID
-                                                                major:_settings.major
-                                                                minor:_settings.minor
-                                                        measuredPower:_settings.measuredPower];
-        [_manager startAdvertising:beaconData.beaconAdvertisement];
+        [_peripheralManager startAdvertising:@{CBAdvertisementDataServiceUUIDsKey:
+                                         @[_immediateAlertService.UUID],
+                                     CBAdvertisementDataLocalNameKey:@"Masakari"}];
         
         [_startItem setEnabled:NO];
         [_stopItem setEnabled:YES];
@@ -79,8 +92,8 @@
 - (void)stopBeacon:(id)sender
 {
     LOG_METHOD;
-    if (_manager.isAdvertising) {
-        [_manager stopAdvertising];
+    if (_peripheralManager.isAdvertising) {
+        [_peripheralManager stopAdvertising];
         [_startItem setEnabled:YES];
         [_stopItem setEnabled:NO];
     } else {
@@ -146,4 +159,137 @@
     [_statusItem setHighlightMode:YES];
     [_statusItem setMenu:_menu];
 }
+
+#pragma mark BLE service and characteristic
+
+
+- (void)initService {
+    // init Peripheral Manager
+    if (!_peripheralManager) {
+        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil];
+    }
+    
+    // init BLE Characteristic for Alert Level
+    _alertLevelChar = [[CBMutableCharacteristic alloc]
+                       initWithType:[CBUUID UUIDWithString:CHAR_ALERT_LEVEL]
+                       properties:CBCharacteristicPropertyWrite
+                       value:nil
+                       permissions:CBAttributePermissionsWriteable];
+    
+    // init BLE Immediate Alert Service
+    _immediateAlertService = [[CBMutableService alloc]
+                              initWithType:[CBUUID UUIDWithString:SERVICE_IMMEDIATE_ALERT]
+                              primary:YES];
+    _immediateAlertService.characteristics = @[_alertLevelChar];
+    
+    @try {
+        [_peripheralManager addService:_immediateAlertService];
+    }
+    @catch (NSException *exception) {
+        LOG(@"Peripheral addService Error name=%@, reason=%@", exception.name, exception.reason);
+        _peripheralManager = nil;
+    }
+    @finally {
+    }
+}
+
+#pragma mark WriteRequest
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral
+  didReceiveWriteRequests:(NSArray *)requests
+{
+    
+    for (CBATTRequest *request in requests) {
+        if ([request.characteristic.UUID isEqual:_alertLevelChar.UUID]) {
+            NSString *stringValue = [self toHex:request.value];
+            LOG(@"written:%@", stringValue);
+            [_peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
+            
+            if( [@"00" isEqualToString:stringValue] ) {
+                [self sendKey:KC_UP];
+            } else if( [@"01" isEqualToString:stringValue] ){
+                [self sendKey:KC_DOWN];
+            } else if( [@"02" isEqualToString:stringValue] ){
+                [self sendKey:KC_ESC];
+            } else if( [@"03" isEqualToString:stringValue] ){
+                [self sendKey:KC_P];
+            }
+        } else {
+            [_peripheralManager respondToRequest:request withResult:CBATTErrorAttributeNotFound];
+        }
+    }
+}
+
+#pragma mark util
+
+- (void) sendKey:(int) keycode
+{
+    // http://stackoverflow.com/questions/3202629/where-can-i-find-a-list-of-mac-virtual-key-codes
+    // http://stackoverflow.com/questions/21878987/mac-send-key-event-to-background-window
+    CGEventRef commandDown = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)KC_COMMAND, true);
+    CGEventRef commandUp = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)KC_COMMAND, false);
+    CGEventRef optionDown = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)KC_OPTION, true);
+    CGEventRef optionUp = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)KC_OPTION, false);
+    
+    CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)keycode, true);
+    CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, (CGKeyCode)keycode, false);
+    
+    if ( keycode == KC_P) {
+        // http://stackoverflow.com/questions/15206825/cmdoptiond-simulation-in-cocoa
+        CGEventSetFlags(keyDown, kCGEventFlagMaskCommand ^ kCGEventFlagMaskAlternate);
+        CGEventSetFlags(keyUp, kCGEventFlagMaskCommand ^ kCGEventFlagMaskAlternate);
+        CGEventPost(0, commandDown);
+        CGEventPost(0, optionDown);
+    }
+    CGEventPost(0, keyDown);
+    CGEventPost(0, keyUp);
+    if ( keycode == KC_P) {
+        CGEventPost(0, commandUp);
+        CGEventPost(0, optionUp);
+    }
+    
+    CFRelease(commandDown);
+    CFRelease(commandUp);
+    CFRelease(optionDown);
+    CFRelease(optionUp);
+    CFRelease(keyDown);
+    CFRelease(keyUp);
+}
+
+
+- (NSString *) toHex:(NSData *) data
+{
+    NSMutableString *str = [NSMutableString stringWithCapacity:64];
+    NSInteger length = [data length];
+    char *bytes = malloc(sizeof(char) * length);
+    
+    [data getBytes:bytes length:length];
+    
+    for (int i = 0; i < length; i++)
+    {
+        [str appendFormat:@"%02.2hhx", bytes[i]];
+    }
+    free(bytes);
+    
+    return str;
+}
+
+- (NSData *) toDataFromHex:(NSString *) hex
+{
+    NSString *trim = [hex stringByReplacingOccurrencesOfString:@"0x" withString:@""];
+    NSMutableData *data= [[NSMutableData alloc] init];
+    unsigned char whole_byte;
+    char byte_chars[3] = {'\0','\0','\0'};
+    int i;
+    for (i = 0; i < [trim length] / 2; i++) {
+        byte_chars[0] = [trim characterAtIndex:i * 2];
+        byte_chars[1] = [trim characterAtIndex:i * 2 + 1];
+        whole_byte = strtol(byte_chars, NULL, 16);
+        [data appendBytes:&whole_byte length:1];
+    }
+    
+    return [data copy];
+}
+
+
 @end

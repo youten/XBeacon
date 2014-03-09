@@ -181,9 +181,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A831EFA18472415004F3209 /* XBeacon */ = {
+		5A831EFA18472415004F3209 /* BLEMasakari */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A831F2C18472415004F3209 /* Build configuration list for PBXNativeTarget "XBeacon" */;
+			buildConfigurationList = 5A831F2C18472415004F3209 /* Build configuration list for PBXNativeTarget "BLEMasakari" */;
 			buildPhases = (
 				5A831EF718472415004F3209 /* Sources */,
 				5A831EF818472415004F3209 /* Frameworks */,
@@ -193,7 +193,7 @@
 			);
 			dependencies = (
 			);
-			name = XBeacon;
+			name = BLEMasakari;
 			productName = XBeacon;
 			productReference = 5A831EFB18472415004F3209 /* XBeacon.app */;
 			productType = "com.apple.product-type.application";
@@ -246,7 +246,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A831EFA18472415004F3209 /* XBeacon */,
+				5A831EFA18472415004F3209 /* BLEMasakari */,
 				5A831F1B18472415004F3209 /* XBeaconTests */,
 			);
 		};
@@ -301,7 +301,7 @@
 /* Begin PBXTargetDependency section */
 		5A831F2118472415004F3209 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5A831EFA18472415004F3209 /* XBeacon */;
+			target = 5A831EFA18472415004F3209 /* BLEMasakari */;
 			targetProxy = 5A831F2018472415004F3209 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -488,7 +488,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A831F2C18472415004F3209 /* Build configuration list for PBXNativeTarget "XBeacon" */ = {
+		5A831F2C18472415004F3209 /* Build configuration list for PBXNativeTarget "BLEMasakari" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A831F2D18472415004F3209 /* Debug */,

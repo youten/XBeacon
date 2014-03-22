@@ -139,15 +139,15 @@ static NSString * CHAR_ALERT_LEVEL = @"00002a06-0000-1000-8000-00805f9b34fb";
         [_menu removeAllItems];
     }
     [_menu setAutoenablesItems:NO];
-    _startItem = [_menu addItemWithTitle:@"Start Beacon" action:@selector(startBeacon:) keyEquivalent:@"r"];
+    _startItem = [_menu addItemWithTitle:@"Start Masakari" action:@selector(startBeacon:) keyEquivalent:@"r"];
     [_startItem setKeyEquivalentModifierMask:NSCommandKeyMask]; // Command+r
     [_startItem setEnabled:NO];
-    _stopItem = [_menu addItemWithTitle:@"Stop Beacon" action:@selector(stopBeacon:) keyEquivalent:@"."];
+    _stopItem = [_menu addItemWithTitle:@"Stop Masakari" action:@selector(stopBeacon:) keyEquivalent:@"."];
     [_stopItem setKeyEquivalentModifierMask:NSCommandKeyMask]; // Command+.
     [_stopItem setEnabled:NO];
     
-    [_menu addItem:[NSMenuItem separatorItem]];
-    [_menu addItemWithTitle:@"Edit Tag" action:@selector(editTag:) keyEquivalent:@""];
+    // [_menu addItem:[NSMenuItem separatorItem]];
+    // [_menu addItemWithTitle:@"Edit Tag" action:@selector(editTag:) keyEquivalent:@""];
     [_menu addItem:[NSMenuItem separatorItem]];
     NSMenuItem *quitItem = [_menu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@"q"];
     [quitItem setKeyEquivalentModifierMask:NSCommandKeyMask]; // Command+q
